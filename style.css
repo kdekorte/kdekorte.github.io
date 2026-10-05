@@ -300,6 +300,84 @@ main {
     letter-spacing: -0.02em;
 }
 
+/* ---------- Project detail content ---------- */
+.screenshots {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.screenshot {
+    margin: 0;
+}
+
+.screenshot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.screenshot figcaption {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.feature-list {
+    margin: 0;
+    padding-left: 1.2em;
+    color: var(--muted);
+}
+
+.feature-list li {
+    margin-bottom: 10px;
+}
+
+.feature-list li:last-child {
+    margin-bottom: 0;
+}
+
+.feature-list strong {
+    color: var(--text);
+}
+
+.detail-sub {
+    margin: 24px 0 10px;
+    font-size: 1.1rem;
+}
+
+.section p {
+    color: var(--muted);
+}
+
+.section code {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.88em;
+    color: var(--text);
+}
+
+.section pre {
+    margin: 0 0 16px;
+    padding: 16px 18px;
+    overflow-x: auto;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    line-height: 1.5;
+}
+
+.section pre:last-child {
+    margin-bottom: 0;
+}
+
+.section a:not(.btn) {
+    color: var(--accent);
+}
+
 /* ---------- Development notes ---------- */
 .notes {
     display: flex;
@@ -342,6 +420,26 @@ footer {
 
 footer p {
     margin: 0;
+}
+
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 22px;
+    margin-bottom: 18px;
+}
+
+.footer-nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-nav a:hover {
+    color: var(--accent);
 }
 
 .footer-sub {

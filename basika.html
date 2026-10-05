@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="basika — a GW-BASIC interpreter by Kevin DeKorte.">
     <title>basika — Kevin DeKorte</title>
+    <link rel="canonical" href="https://kdekorte.github.io/basika.html">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9617520842418047" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -29,25 +31,117 @@
                 <h2>Description</h2>
             </div>
             <p class="lead">A GW-BASIC interpreter that brings the classic 1980s programming language back to life — parse, run, and relive vintage BASIC code.</p>
+            <p class="lead">Basika is a small IBM BASICA-compatible interpreter written in C on top of SDL3. It runs classic line-numbered programs in the terminal or in a graphics window, and adds QBasic-style modular programming plus a handful of modern extensions for images, fonts, and compression.</p>
+        </section>
+
+        <section id="screenshots" class="section">
+            <div class="section-head">
+                <span class="section-index">02</span>
+                <h2>Screenshots</h2>
+            </div>
+            <div class="screenshots">
+                <figure class="screenshot">
+                    <img src="fractal_source.png" alt="Terminal showing the line-numbered BASIC source of demo/fractal.bas, a Mandelbrot set generator" loading="lazy" width="1836" height="1420">
+                    <figcaption>The source of <code>demo/fractal.bas</code>, a classic line-numbered Mandelbrot generator.</figcaption>
+                </figure>
+                <figure class="screenshot">
+                    <img src="fractal_run.png" alt="Basika graphics window displaying a colorful Mandelbrot set rendered at 640×480 in 256 colors" loading="lazy" width="2140" height="1692">
+                    <figcaption>The same program running in Basika's graphics window at 640×480 with 256 colors.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section id="features" class="section">
+            <div class="section-head">
+                <span class="section-index">03</span>
+                <h2>Features</h2>
+            </div>
+            <ul class="feature-list">
+                <li><strong>BASICA compatibility</strong> — a wide range of IBM BASICA commands, with a full keyword and syntax reference in <code>KEYWORDS.md</code>.</li>
+                <li><strong>Modular programming</strong> — QBasic-style <code>SUB</code> and <code>FUNCTION</code> blocks with <code>CALL</code>, <code>DECLARE</code>, <code>SHARED</code>, <code>STATIC</code>, local scope, pass-by-reference parameters, and recursion.</li>
+                <li><strong>Graphics</strong> — an SDL3 graphics window (<code>-w</code>) or a headless virtual framebuffer for CI, with image handles via <code>_LOADIMAGE</code>, <code>_PUTIMAGE</code>, and <code>_FREEIMAGE</code>.</li>
+                <li><strong>Fonts</strong> — load and switch TrueType fonts with <code>_LOADFONT</code>, <code>_FONT</code>, and <code>_FREEFONT</code>.</li>
+                <li><strong>Sound</strong> — <code>SOUND</code> and <code>PLAY</code> with the Music Macro Language.</li>
+                <li><strong>Strings</strong> — heap-backed dynamic strings that handle multi-megabyte values, fixed-length <code>STRING * n</code> declarations, and lossless <code>_DEFLATE$</code> / <code>_INFLATE$</code> compression.</li>
+                <li><strong>Tested</strong> — a <code>make test</code> suite plus a performance regression guard built around a 10-million-iteration benchmark.</li>
+            </ul>
+        </section>
+
+        <section id="install" class="section">
+            <div class="section-head">
+                <span class="section-index">04</span>
+                <h2>Getting Started</h2>
+            </div>
+            <p>On macOS, install with <a href="https://brew.sh" target="_blank" rel="noopener">Homebrew</a>. The SDL3 dependencies are pulled in for you:</p>
+<pre><code>brew tap kdekorte/basika https://github.com/kdekorte/basika.git
+brew install basika</code></pre>
+            <p>To build from source you need <code>gcc</code>, <code>pkg-config</code>, and the SDL3, SDL3_ttf, SDL3_mixer, and SDL3_image development headers. Then run <code>make</code>.</p>
+            <h3 class="detail-sub">Running programs</h3>
+<pre><code>./basika demo/hello.bas            # run in the terminal
+./basika -w demo/boing_ball.bas    # open a graphics window
+./basika --headless demo/hello.bas # virtual framebuffer, no window
+./basika demo/sound_demo.bas       # SOUND and PLAY demo</code></pre>
+            <p>Basika is released under the MIT License.</p>
         </section>
 
         <section id="notes" class="section">
             <div class="section-head">
-                <span class="section-index">02</span>
+                <span class="section-index">05</span>
                 <h2>Development Notes</h2>
             </div>
             <div class="notes">
-                <!-- Add development notes here as HTML entries, e.g.:
                 <article class="note">
-                    <p class="note-date">2026-01-01</p>
-                    <p>Note content goes here.</p>
+                    <p class="note-date">2026-10-03</p>
+                    <p>Version 0.99.6 brought much more QBasic-style structured programming: full <code>SELECT CASE</code> blocks (value lists, <code>TO</code> ranges, <code>CASE IS</code> comparisons), every form of <code>DO...LOOP</code> with <code>EXIT DO</code>, multiline <code>IF</code>/<code>ELSEIF</code> blocks, and user-defined <code>TYPE</code> records with arrays and random-record file I/O.</p>
                 </article>
-                -->
+                <article class="note">
+                    <p class="note-date">2026-10-03</p>
+                    <p>Numeric expressions are now compiled when a program loads, and procedure variable lookups are cached. The 10-million-iteration <code>basica.bas</code> benchmark dropped from about 1.17 s to 0.65 s. A pre-commit hook now guards against performance regressions.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-03</p>
+                    <p><code>PLAY</code> gained foreground/background playback, articulation modes, volume, and tempo control, and <code>PSET</code>, <code>LINE</code>, and <code>PAINT</code> now take optional alpha values. A new <code>--no-audio</code> flag keeps automated tests fast.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-02</p>
+                    <p>Version 0.99.5: errors in programs without line numbers now report the real source-file line. Side-effect-free <code>DEF FN</code> bodies compile once to an AST, cutting a 2-million-call benchmark from 0.99 s to 0.64 s.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-09-23</p>
+                    <p>Added QBasic <code>SUB</code> and <code>FUNCTION</code> procedures with local scope, recursion, pass-by-reference and pass-by-value parameters, plus <code>CALL</code>, <code>DECLARE</code>, <code>SHARED</code>, and <code>STATIC</code>.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-09-01</p>
+                    <p>Strings moved to heap-backed storage that grows on demand, so multi-megabyte values work. Fixed-length <code>STRING * n</code> declarations were added, and <code>_DEFLATE$</code>/<code>_INFLATE$</code> handle large round trips.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-08-19</p>
+                    <p>Added <code>_LOADIMAGE</code>, <code>_PUTIMAGE</code>, and <code>_FREEIMAGE</code> on top of SDL3_image, and improved <code>_LOADFONT</code> rendering with crisp nearest-neighbor glyphs.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-07-06</p>
+                    <p>Line numbers became optional. Programs can now jump to named labels, and <code>WINDOW</code> and <code>VIEW</code> provide logical coordinates and viewport clipping for every drawing command.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-06-17</p>
+                    <p>Added a <code>--headless</code> mode so graphics programs and screenshots can run in CI, and refactored the interpreter core and variable lookups for a 2× speedup.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-06-09</p>
+                    <p>First commit of the core interpreter, followed within days by <code>PAINT</code>, <code>DRAW</code>, standard BASIC error codes with <code>ERR</code>/<code>ERL</code>, type suffixes, <code>DEFINT</code>-style defaults, and the <code>SCREENSHOT</code> command.</p>
+                </article>
             </div>
         </section>
     </main>
 
     <footer>
+        <nav class="footer-nav" aria-label="Site">
+            <a href="index.html">Home</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="https://github.com/kdekorte" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/kevin-dekorte-9445943" target="_blank" rel="noopener">LinkedIn</a>
+        </nav>
         <p>&copy; 2026 Kevin DeKorte</p>
         <p class="footer-sub">Built with a love for clean code.</p>
     </footer>

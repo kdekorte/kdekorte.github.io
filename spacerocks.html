@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="SpaceRocks — an Asteroids clone by Kevin DeKorte.">
     <title>SpaceRocks — Kevin DeKorte</title>
+    <link rel="canonical" href="https://kdekorte.github.io/spacerocks.html">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9617520842418047" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -29,25 +31,93 @@
                 <h2>Description</h2>
             </div>
             <p class="lead">A modern clone of the classic arcade game Asteroids — pilot your ship, blast drifting space rocks, and dodge the debris.</p>
+            <p class="lead">SpaceRocks is a native macOS game written in Swift with SpriteKit.</p>
+        </section>
+
+        <section id="screenshots" class="section">
+            <div class="section-head">
+                <span class="section-index">02</span>
+                <h2>Screenshots</h2>
+            </div>
+            <div class="screenshots">
+                <figure class="screenshot">
+                    <img src="space_rocks_splash.png" alt="SpaceRocks title screen with score, high score, and lives along the top and control hints at the bottom" loading="lazy" width="2272" height="1824">
+                    <figcaption>The title screen: arrow keys rotate and thrust, Space fires.</figcaption>
+                </figure>
+                <figure class="screenshot">
+                    <img src="space_rocks_game.png" alt="SpaceRocks gameplay showing the player's ship among outlined asteroids with an alien UFO firing nearby" loading="lazy" width="2272" height="1824">
+                    <figcaption>In play: vector-style rocks and an alien UFO taking shots at your ship.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section id="features" class="section">
+            <div class="section-head">
+                <span class="section-index">03</span>
+                <h2>Features</h2>
+            </div>
+            <ul class="feature-list">
+                <li><strong>Arcade action</strong> — fast-paced asteroid blasting.</li>
+                <li><strong>Flexible controls</strong> — play with the keyboard or a game controller.</li>
+                <li><strong>Hazards and defenses</strong> — shields, alien UFOs, and more.</li>
+                <li><strong>Retro style</strong> — visuals and sounds that nod to the original cabinet.</li>
+            </ul>
+        </section>
+
+        <section id="install" class="section">
+            <div class="section-head">
+                <span class="section-index">04</span>
+                <h2>Getting Started</h2>
+            </div>
+            <p>SpaceRocks requires macOS 13.0 or later. Install the latest release with <a href="https://brew.sh" target="_blank" rel="noopener">Homebrew</a>:</p>
+<pre><code>brew tap kdekorte/SpaceRocks https://github.com/kdekorte/SpaceRocks.git
+brew trust kdekorte/SpaceRocks
+brew install --cask spacerocks</code></pre>
+            <p>On first launch, open <strong>System Settings → Privacy &amp; Security</strong> and allow the app to open.</p>
         </section>
 
         <section id="notes" class="section">
             <div class="section-head">
-                <span class="section-index">02</span>
+                <span class="section-index">05</span>
                 <h2>Development Notes</h2>
             </div>
             <div class="notes">
-                <!-- Add development notes here as HTML entries, e.g.:
                 <article class="note">
-                    <p class="note-date">2026-01-01</p>
-                    <p>Note content goes here.</p>
+                    <p class="note-date">2026-07-28</p>
+                    <p>Packaged the game for release and published a Homebrew cask, so it installs with <code>brew install --cask spacerocks</code>.</p>
                 </article>
-                -->
+                <article class="note">
+                    <p class="note-date">2026-03-23</p>
+                    <p>Added the alien UFO enemy and refreshed its look, added a "Wave N" message between levels, and made the level reset properly at game over.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-03-20</p>
+                    <p>Fixed respawn issues and gave the ship 500 ms of invulnerability at the start of each life. Each new level now speeds the rocks up.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-03-19</p>
+                    <p>Added sound effects, a thrust graphic, and game controller support (the A button starts a game), and automated some build tasks.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-03-18</p>
+                    <p>Added application icons and code signing, and fixed a round of bugs.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-03-17</p>
+                    <p>Initial commit: a SpriteKit take on Asteroids for macOS, written in Swift.</p>
+                </article>
             </div>
         </section>
     </main>
 
     <footer>
+        <nav class="footer-nav" aria-label="Site">
+            <a href="index.html">Home</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="https://github.com/kdekorte" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/kevin-dekorte-9445943" target="_blank" rel="noopener">LinkedIn</a>
+        </nav>
         <p>&copy; 2026 Kevin DeKorte</p>
         <p class="footer-sub">Built with a love for clean code.</p>
     </footer>

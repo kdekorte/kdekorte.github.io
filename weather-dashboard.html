@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Weather Dashboard — a kiosk-style weather dashboard by Kevin DeKorte.">
     <title>Weather Dashboard — Kevin DeKorte</title>
+    <link rel="canonical" href="https://kdekorte.github.io/weather-dashboard.html">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9617520842418047" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -29,25 +31,95 @@
                 <h2>Description</h2>
             </div>
             <p class="lead">A fullscreen kiosk-style weather dashboard for 800×480 touchscreens — live conditions, a 5-day forecast, and animated precipitation radar, with no API keys required.</p>
+            <p class="lead">It's built with <a href="https://neutralino.js.org/" target="_blank" rel="noopener">Neutralino.js</a> and Leaflet, ships as a native macOS app, and builds for Linux (including Raspberry Pi) and Windows from the same source.</p>
+        </section>
+
+        <section id="screenshots" class="section">
+            <div class="section-head">
+                <span class="section-index">02</span>
+                <h2>Screenshots</h2>
+            </div>
+            <figure class="screenshot">
+                <img src="weather-dashboard-screenshot.png" alt="Weather Dashboard window with a clock and current conditions on the left, a radar map of northern Colorado in the center, and a 5-day forecast on the right" loading="lazy" width="1200" height="779">
+                <figcaption>Clock and current conditions, animated radar over OpenStreetMap, and the 5-day forecast.</figcaption>
+            </figure>
+        </section>
+
+        <section id="features" class="section">
+            <div class="section-head">
+                <span class="section-index">03</span>
+                <h2>Features</h2>
+            </div>
+            <ul class="feature-list">
+                <li><strong>Live clock</strong> — large HH:MM display with AM/PM, day of week, and date.</li>
+                <li><strong>Current conditions</strong> — temperature, feels-like, condition, wind, humidity, and sunrise/sunset. Click the unit to toggle °F/°C.</li>
+                <li><strong>5-day forecast</strong> — daily high/low, a condition icon, and precipitation probability.</li>
+                <li><strong>Map and radar</strong> — OpenStreetMap tiles with an animated RainViewer precipitation overlay and zoom controls.</li>
+                <li><strong>Location aware</strong> — uses the OS location service, falling back to configured coordinates.</li>
+                <li><strong>No API keys</strong> — every data source is free: Open-Meteo, RainViewer, OpenStreetMap, and Nominatim.</li>
+            </ul>
+        </section>
+
+        <section id="install" class="section">
+            <div class="section-head">
+                <span class="section-index">04</span>
+                <h2>Getting Started</h2>
+            </div>
+            <p>On macOS, install with <a href="https://brew.sh" target="_blank" rel="noopener">Homebrew</a>:</p>
+<pre><code>brew tap kdekorte/weather-dashboard https://github.com/kdekorte/weather-dashboard.git
+brew trust kdekorte/weather-dashboard
+brew install weather-dashboard</code></pre>
+            <p>The app is ad-hoc signed, so on first launch open <strong>System Settings → Privacy &amp; Security</strong> and click <strong>Open Anyway</strong>. Allow location access so the forecast and map center on where you are.</p>
+            <h3 class="detail-sub">Running from source</h3>
+            <p>You need Node.js 20+ and the Neutralino CLI (<code>npm i -g @neutralinojs/neu</code>):</p>
+<pre><code>neu update   # download runtime binaries (first time only)
+neu run      # start the app with live reload
+neu build    # build binaries for macOS, Linux, and Windows</code></pre>
+            <p>Settings such as units, 12/24-hour time, refresh interval, and radar opacity live under <code>weatherConfig</code> in <code>neutralino.config.json</code>.</p>
         </section>
 
         <section id="notes" class="section">
             <div class="section-head">
-                <span class="section-index">02</span>
+                <span class="section-index">05</span>
                 <h2>Development Notes</h2>
             </div>
             <div class="notes">
-                <!-- Add development notes here as HTML entries, e.g.:
                 <article class="note">
-                    <p class="note-date">2026-01-01</p>
-                    <p>Note content goes here.</p>
+                    <p class="note-date">2026-09-28</p>
+                    <p>Removed hover and tap highlights from interactive elements so the dashboard looks clean on a touchscreen.</p>
                 </article>
-                -->
+                <article class="note">
+                    <p class="note-date">2026-09-23</p>
+                    <p>Version 1.0.6 redesigned the preferences menu, splitting settings and location into separate dialogs. The map now returns to the home location after 10 minutes of inactivity.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-09-21</p>
+                    <p>Added a dark theme with a cyan-blue palette that can be toggled live from Settings, then tuned its contrast. The forecast panel was widened and its fonts enlarged for readability. A <code>showMenuBar</code> option was also added.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-09-18</p>
+                    <p>Renamed the project from bob-weather to Weather Dashboard and shipped versions 1.0.2 and 1.0.3, including a fix so the packaged bundle is named <code>Weather Dashboard.app</code>.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-09-17</p>
+                    <p>Released 1.0.0 with a Homebrew cask and a release script. Geolocation moved from the WebView to a native CoreLocation helper with an embedded <code>Info.plist</code>, so macOS grants location permission correctly.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-09-16</p>
+                    <p>First day of development: the three-column layout, Open-Meteo forecasts, Leaflet map with RainViewer radar, play/pause and home buttons, double-click to pin a location, UV index and an hourly precipitation bar, a custom app icon, and the macOS packaging script.</p>
+                </article>
             </div>
         </section>
     </main>
 
     <footer>
+        <nav class="footer-nav" aria-label="Site">
+            <a href="index.html">Home</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="https://github.com/kdekorte" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/kevin-dekorte-9445943" target="_blank" rel="noopener">LinkedIn</a>
+        </nav>
         <p>&copy; 2026 Kevin DeKorte</p>
         <p class="footer-sub">Built with a love for clean code.</p>
     </footer>
