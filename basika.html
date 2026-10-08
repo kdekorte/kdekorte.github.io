@@ -18,7 +18,7 @@
     <header class="detail-hero">
         <div class="detail-hero-inner">
             <a class="back-link" href="index.html">← Back to Projects</a>
-            <img class="detail-icon" src="basika.png" alt="basika icon" loading="lazy">
+            <img class="detail-icon" src="images/basika/icon.png" alt="basika icon" loading="lazy">
             <h1>basika</h1>
             <a class="btn btn-ghost" href="https://github.com/kdekorte/basika" target="_blank" rel="noopener">View on GitHub ↗</a>
         </div>
@@ -39,14 +39,22 @@
                 <span class="section-index">02</span>
                 <h2>Screenshots</h2>
             </div>
-            <div class="screenshots">
+            <div class="screenshots gallery">
                 <figure class="screenshot">
-                    <img src="fractal_source.png" alt="Terminal showing the line-numbered BASIC source of demo/fractal.bas, a Mandelbrot set generator" loading="lazy" width="1836" height="1420">
+                    <img src="images/basika/fractal_source.png" alt="Terminal showing the line-numbered BASIC source of demo/fractal.bas, a Mandelbrot set generator" loading="lazy" width="1836" height="1420">
                     <figcaption>The source of <code>demo/fractal.bas</code>, a classic line-numbered Mandelbrot generator.</figcaption>
                 </figure>
                 <figure class="screenshot">
-                    <img src="fractal_run.png" alt="Basika graphics window displaying a colorful Mandelbrot set rendered at 640×480 in 256 colors" loading="lazy" width="2140" height="1692">
+                    <img src="images/basika/fractal_run.png" alt="Basika graphics window displaying a colorful Mandelbrot set rendered at 640×480 in 256 colors" loading="lazy" width="2140" height="1692">
                     <figcaption>The same program running in Basika's graphics window at 640×480 with 256 colors.</figcaption>
+                </figure>
+                <figure class="screenshot">
+                    <img src="images/basika/printstring.png" alt="Basika _PRINTSTRING demo window showing several TrueType fonts, rainbow letters on a wave, plain, bold, italic and underline styles, and left, center and right aligned text" loading="lazy" width="1692" height="1356">
+                    <figcaption><code>demo/printstring.bas</code> places text by the pixel with <code>_PRINTSTRING</code> in any TrueType font loaded by <code>_LOADFONT</code>.</figcaption>
+                </figure>
+                <figure class="screenshot">
+                    <img src="images/basika/qb64_paint.png" alt="BASIKA Paint, a MacPaint-style drawing program with a tool palette on the left, a color palette along the bottom, and the word hello brushed on the canvas" loading="lazy" width="1854" height="1356">
+                    <figcaption><code>demo/qb64_paint.bas</code>, a MacPaint-style paint program written in BASIC with QB64 image and mouse extensions.</figcaption>
                 </figure>
             </div>
         </section>
@@ -90,6 +98,34 @@ brew install basika</code></pre>
                 <h2>Development Notes</h2>
             </div>
             <div class="notes">
+                <article class="note">
+                    <p class="note-date">2026-10-08</p>
+                    <p>Basika can now run more QB64 programs as written. <code>OPTION _EXPLICIT</code> checks that every variable is declared before the program starts, <code>$NOPREFIX</code> lets QB64 keywords drop their leading underscore, and <code>_FULLSCREEN</code>, <code>_PRINTMODE</code>, <code>_ROUND</code>, and <code>DIM AS type</code> name lists are supported. <code>_LOADFONT</code> gained bold, italic, and underline styles, and the <code>printstring</code> demo was rewritten as an animated text and font showcase.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-08</p>
+                    <p>Windows can be resized with <code>$RESIZE</code> and <code>_RESIZE</code>, and the paint demo grows to fill the window or shows scroll bars when the window is smaller than the picture. <code>PRINT USING</code> now matches QBasic field by field, and Boing Ball draws at full 1024×768 resolution with time-based motion at up to 60 fps.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-07</p>
+                    <p>Arithmetic moved to QBasic's rules. Integer variables hold exact 64-bit values, expressions carry their QBasic type and raise Overflow when a result doesn't fit, and operator precedence matches QBasic. A single token-based expression parser replaced the old text evaluator. Arrays can be passed to procedures as <code>name()</code>, with <code>LBOUND</code> and <code>UBOUND</code>, and <code>EQV</code>, <code>IMP</code>, <code>CINT</code>, <code>CLNG</code>, <code>CSNG</code>, and <code>CDBL</code> were added.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-07</p>
+                    <p>Added QB64's image, mouse, and keyboard extensions: <code>_NEWIMAGE</code>, <code>_DEST</code>, <code>_SOURCE</code>, <code>_COPYIMAGE</code>, a QB64-compatible <code>_PUTIMAGE</code> with stretching and mirroring, <code>_KEYDOWN</code>, <code>_KEYHIT</code>, and the <code>_MOUSE</code> functions. They are put to work in <code>demo/qb64_paint.bas</code>, a MacPaint-style program that includes its own <code>--selftest</code>.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-07</p>
+                    <p>A long list of classic commands arrived: <code>LINE INPUT</code>, <code>WRITE</code>, <code>PALETTE</code>, screen pages with <code>PCOPY</code> for double buffering, <code>CHAIN</code> with <code>COMMON</code>, <code>STOP</code>/<code>CONT</code>, <code>WAIT</code> with a simulated VGA retrace, and direct-mode <code>SAVE</code>, <code>LOAD</code>, <code>RENUM</code>, <code>AUTO</code>, and <code>EDIT</code>. Random-access files now follow QBasic's record layout and error codes.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-07</p>
+                    <p>Graphics commands now take QBasic's argument lists: <code>CIRCLE</code> arcs and ellipses, <code>LINE</code> style masks, <code>PAINT</code> tiles, and <code>STEP</code> everywhere. Alpha moved to the QB64 model, with <code>SCREEN _NEWIMAGE(w, h, 32)</code> and <code>&amp;HAARRGGBB</code> colors, replacing the trailing alpha arguments from last week. <code>DIM ... AS type</code>, <code>LONG</code>, and <code>&amp;H</code>/<code>&amp;O</code>/<code>&amp;B</code> literals were added, and the BASICA benchmark got about 25% faster.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-06</p>
+                    <p>Added <code>CONST</code>, <code>POINT</code>, <code>CSRLIN</code>, and <code>POS</code>. The interpreter now steps to the next statement through the program list instead of rescanning from the top and caches procedure lookups, which cut Boing Ball's headless frame time from about 88 ms to 34 ms.</p>
+                </article>
                 <article class="note">
                     <p class="note-date">2026-10-03</p>
                     <p>Version 0.99.6 brought much more QBasic-style structured programming: full <code>SELECT CASE</code> blocks (value lists, <code>TO</code> ranges, <code>CASE IS</code> comparisons), every form of <code>DO...LOOP</code> with <code>EXIT DO</code>, multiline <code>IF</code>/<code>ELSEIF</code> blocks, and user-defined <code>TYPE</code> records with arrays and random-record file I/O.</p>
@@ -145,5 +181,6 @@ brew install basika</code></pre>
         <p>&copy; 2026 Kevin DeKorte</p>
         <p class="footer-sub">Built with a love for clean code.</p>
     </footer>
+    <script src="gallery.js" defer></script>
 </body>
 </html>
