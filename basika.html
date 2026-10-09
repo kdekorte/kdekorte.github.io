@@ -99,6 +99,14 @@ brew install basika</code></pre>
             </div>
             <div class="notes">
                 <article class="note">
+                    <p class="note-date">2026-10-09</p>
+                    <p>Version 0.99.7 ships with Vortex, a Tempest-style tube shooter in BASIC. Flippers, tankers, and spikers climb the lanes of six tube shapes, and the game has a superzapper, warps between levels, and a demo game on the title screen. Getting it to run meant fixing loop control inside procedures: <code>EXIT FOR</code> actually works now (it used to be ignored), <code>EXIT SUB</code> from inside a loop no longer leaks loop entries, and a single-line <code>IF ... THEN ... ELSE</code> in a procedure runs only one branch.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-08</p>
+                    <p>A pass with macOS <code>leaks</code> found and fixed memory and resource leaks in <code>SELECT CASE</code>, <code>INPUT$</code>, <code>ENVIRON</code>, and in image and font slots left over after <code>RUN</code>, <code>CHAIN</code>, or <code>NEW</code>. The paint demo now draws thick rectangle and oval outlines at the brush size, and no longer overflows on fast strokes in large windows or leaves striped gaps in filled circles.</p>
+                </article>
+                <article class="note">
                     <p class="note-date">2026-10-08</p>
                     <p>Basika can now run more QB64 programs as written. <code>OPTION _EXPLICIT</code> checks that every variable is declared before the program starts, <code>$NOPREFIX</code> lets QB64 keywords drop their leading underscore, and <code>_FULLSCREEN</code>, <code>_PRINTMODE</code>, <code>_ROUND</code>, and <code>DIM AS type</code> name lists are supported. <code>_LOADFONT</code> gained bold, italic, and underline styles, and the <code>printstring</code> demo was rewritten as an animated text and font showcase.</p>
                 </article>
