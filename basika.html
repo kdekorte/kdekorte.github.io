@@ -34,9 +34,19 @@
             <p class="lead">Basika is a small IBM BASICA-compatible interpreter written in C on top of SDL3. It runs classic line-numbered programs in the terminal or in a graphics window, and adds QBasic-style modular programming plus a handful of modern extensions for images, fonts, and compression.</p>
         </section>
 
-        <section id="screenshots" class="section">
+        <section id="video" class="section">
             <div class="section-head">
                 <span class="section-index">02</span>
+                <h2>Video</h2>
+            </div>
+            <div class="video-embed">
+                <iframe src="https://www.youtube-nocookie.com/embed/3unVa_5Ki-4" title="basika demo video" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section id="screenshots" class="section">
+            <div class="section-head">
+                <span class="section-index">03</span>
                 <h2>Screenshots</h2>
             </div>
             <div class="screenshots gallery">
@@ -61,7 +71,7 @@
 
         <section id="features" class="section">
             <div class="section-head">
-                <span class="section-index">03</span>
+                <span class="section-index">04</span>
                 <h2>Features</h2>
             </div>
             <ul class="feature-list">
@@ -77,7 +87,7 @@
 
         <section id="install" class="section">
             <div class="section-head">
-                <span class="section-index">04</span>
+                <span class="section-index">05</span>
                 <h2>Getting Started</h2>
             </div>
             <p>On macOS, install with <a href="https://brew.sh" target="_blank" rel="noopener">Homebrew</a>. The SDL3 dependencies are pulled in for you:</p>
@@ -94,10 +104,30 @@ brew install basika</code></pre>
 
         <section id="notes" class="section">
             <div class="section-head">
-                <span class="section-index">05</span>
+                <span class="section-index">06</span>
                 <h2>Development Notes</h2>
             </div>
             <div class="notes">
+                <article class="note">
+                    <p class="note-date">2026-10-16</p>
+                    <p>Basika now has a demo video, and it's built by basika itself. Each demo runs headless and saves every frame with <code>SCREENSHOT</code>, small scripts drive the mouse through Paint and Jukebox, and Vortex and Burrow play themselves on autopilot. A Python script draws the title cards in the IBM VGA font and synthesizes the soundtrack, and ffmpeg joins the clips and adds a CRT glow and scanlines. Also fixed a crash when an expression ends in an operator, such as <code>PRINT 1 +</code>; it now reports a syntax error, as QBasic does.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-15</p>
+                    <p>Text now uses the real IBM PC screen fonts (VGA 8×16, EGA 8×14 and 8×8), scaled only by whole numbers so every glyph is pixel-exact, and the window draws sharp on Retina displays instead of being blurred up from half resolution. <code>PRINT</code> spacing between numbers now matches QBasic, <code>?</code> works as shorthand for <code>PRINT</code>, and <code>KILL</code> is silent. A new Life demo runs Conway's Game of Life on a 160×120 grid, with cells that fade in and out and can be drawn with the mouse.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-14</p>
+                    <p>Version 0.99.8 can package a BASIC program as a standalone Mac app. A build script bundles a portable basika, SDL3 and its libraries, the fonts, and the program's assets into a signed <code>.app</code>, and Burrow is now installable as a Homebrew cask. A new Jukebox demo plays songs from a mouse-driven list and keeps play counts in a random-access file of <code>TYPE</code> records, and Vortex got a synthwave music loop and joystick support.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-13</p>
+                    <p>Added Burrow, a Dig Dug-style digging game with original sprites, sounds, and an autopilot title demo. It uses the new QB64 sound file commands: <code>_SNDOPEN</code> loads WAV, OGG, MP3, or FLAC, and <code>_SNDPLAY</code>, <code>_SNDLOOP</code>, <code>_SNDPAUSE</code>, and <code>_SNDPLAYCOPY</code> control playback. <code>FREEFILE</code> was added, and <code>EOF</code> now returns -1, so the common <code>DO WHILE NOT EOF(n)</code> loop works. A VS Code extension can now run <code>.bas</code> files with basika.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-13</p>
+                    <p>A round of graphics speedups. More expressions are compiled ahead of time, <code>POINT</code> reads from a cached copy of the image, and <code>PAINT</code> presents once a frame and uploads only the area it filled instead of waiting on the display after every fill. <code>_DISPLAY</code> now turns automatic presents off, as it does in QB64. New regression tests and benchmarks cover expressions, <code>POINT</code>, and <code>PAINT</code>.</p>
+                </article>
                 <article class="note">
                     <p class="note-date">2026-10-09</p>
                     <p>Version 0.99.7 ships with Vortex, a Tempest-style tube shooter in BASIC. Flippers, tankers, and spikers climb the lanes of six tube shapes, and the game has a superzapper, warps between levels, and a demo game on the title screen. Getting it to run meant fixing loop control inside procedures: <code>EXIT FOR</code> actually works now (it used to be ignored), <code>EXIT SUB</code> from inside a loop no longer leaks loop entries, and a single-line <code>IF ... THEN ... ELSE</code> in a procedure runs only one branch.</p>
