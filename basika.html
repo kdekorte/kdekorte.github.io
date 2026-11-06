@@ -78,10 +78,11 @@
                 <li><strong>BASICA compatibility</strong> — a wide range of IBM BASICA commands, with a full keyword and syntax reference in <code>KEYWORDS.md</code>.</li>
                 <li><strong>Modular programming</strong> — QBasic-style <code>SUB</code> and <code>FUNCTION</code> blocks with <code>CALL</code>, <code>DECLARE</code>, <code>SHARED</code>, <code>STATIC</code>, local scope, pass-by-reference parameters, and recursion.</li>
                 <li><strong>Graphics</strong> — an SDL3 graphics window (<code>-w</code>) or a headless virtual framebuffer for CI, with image handles via <code>_LOADIMAGE</code>, <code>_PUTIMAGE</code>, and <code>_FREEIMAGE</code>.</li>
-                <li><strong>Fonts</strong> — load and switch TrueType fonts with <code>_LOADFONT</code>, <code>_FONT</code>, and <code>_FREEFONT</code>.</li>
-                <li><strong>Sound</strong> — <code>SOUND</code> and <code>PLAY</code> with the Music Macro Language.</li>
+                <li><strong>Fonts</strong> — load and switch TrueType fonts with <code>_LOADFONT</code>, <code>_FONT</code>, and <code>_FREEFONT</code>, and draw Unicode text with <code>_UPRINTSTRING</code>.</li>
+                <li><strong>Sound</strong> — <code>SOUND</code> and <code>PLAY</code> with the Music Macro Language, plus sound files (WAV, OGG, MP3, or FLAC) through the <code>_SND</code> commands.</li>
                 <li><strong>Strings</strong> — heap-backed dynamic strings that handle multi-megabyte values, fixed-length <code>STRING * n</code> declarations, and lossless <code>_DEFLATE$</code> / <code>_INFLATE$</code> compression.</li>
-                <li><strong>Tested</strong> — a <code>make test</code> suite plus a performance regression guard built around a 10-million-iteration benchmark.</li>
+                <li><strong>Files</strong> — sequential, random-access, and binary file I/O, with QBasic's variable <code>PUT</code> and <code>GET</code> on <code>TYPE</code> records.</li>
+                <li><strong>Tested</strong> — a <code>make test</code> suite plus a performance regression guard that times a two-second benchmark of the interpreter's hot paths.</li>
             </ul>
         </section>
 
@@ -109,8 +110,48 @@ brew install basika</code></pre>
             </div>
             <div class="notes">
                 <article class="note">
+                    <p class="note-date">2026-11-06</p>
+                    <p>Version 0.99.9 brings QBasic's variable <code>PUT</code> and <code>GET</code> to file I/O, string-heavy loops that run three to four times faster, array loops about twice as fast, numbered timer event traps, and Unicode text through <code>_UPRINTSTRING</code>. A wide patch of QB64 Phoenix Edition — the math, bit, file and folder, clipboard, mouse and window functions — arrived this cycle, and the Homebrew formula and the Burrow cask are updated to match.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-21</p>
+                    <p><code>PUT #n, position, variable</code> and <code>GET #n, position, variable</code> now accept any variable, as in QBasic — numeric and string scalars, array elements, and <code>TYPE</code> record members — instead of only whole records and the <code>len, data$</code> form, which keeps working. BINARY files move exactly the variable's bytes, so <code>PUT #1, 1, x%</code> writes 2 bytes instead of crashing, and a <code>GET</code> past the end zero-fills. RANDOM files move a whole <code>LEN</code>-byte record and report Bad record length when the data is larger, and an omitted position reads or writes just past the last one, as QBasic does.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-20</p>
+                    <p>String assignment and concatenation got faster: the expression parser appends variable values, <code>STRING$</code> and <code>SPACE$</code> directly into the result and hands its finished buffer to the caller, and assignments and parameter bindings adopt a temporary's buffer instead of copying it — only what BASICA value semantics requires still copies. String-heavy loops run about three to four times faster. A new demo runs a <code>.bas</code> file as a shell script: give it a <code>#!/usr/bin/env basika</code> shebang line and the execute bit, and <code>./demo/os_shebang_demo.bas</code> works like any other script.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-19</p>
+                    <p>A day of speedups. Variable names are cached and statement dispatch is threaded so loops run faster, <code>PAINT</code> and <code>PSET</code> share a pixel cache, and event traps are no longer polled when nothing is pending. Array loops got their own boost: an expression of a single name or number, such as <code>a(i) = i</code>, is compiled and cached like longer expressions instead of being re-parsed on every iteration — the sieve benchmark dropped from 6.5 to 3.3 seconds for 10 million elements.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-19</p>
+                    <p>Added QB64 timers and process control. <code>_FREETIMER</code> hands out a free timer number, <code>ON TIMER(t, n) GOSUB</code> arms a trap on it, and <code>TIMER(t) ON</code>, <code>OFF</code>, <code>STOP</code>, or <code>FREE</code> controls it, alongside the classic <code>ON TIMER(n)</code>. <code>_EXIT</code> is -1 on the first read after the user closes the window, and <code>SHELL</code> gained the <code>_HIDE</code> and <code>_DONTWAIT</code> options, plus <code>_SHELLHIDE(command$)</code>, which runs the command hidden and returns its exit code.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-18</p>
+                    <p>Text can now be Unicode. <code>_UPRINTSTRING</code> draws UTF-8, UTF-16, UTF-32 or codepage text at pixel positions, <code>_UPRINTWIDTH</code>, <code>_UFONTHEIGHT</code>, <code>_ULINESPACING</code> and <code>_UCHARPOS</code> measure it, <code>_MAPUNICODE</code> maps code points, <code>_CONTROLCHR</code> with <code>OFF</code> makes <code>PRINT</code> draw control codes as glyphs, and <code>_BLINK</code> keeps its setting.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-18</p>
+                    <p>QBasic's one-line procedures work: <code>SUB P: PRINT G: END SUB</code> and <code>FUNCTION SQ (X): SQ = X * X: END FUNCTION</code>, with or without a line number — before, the procedure ran on through the rest of the program. Inline declarations arrived too, as in FreeBASIC: <code>DIM n AS LONG = 1000000</code> sets a variable's first value and <code>FOR i AS LONG = 1 TO n</code> declares the loop counter's type, and both work with <code>OPTION _EXPLICIT</code>.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-18</p>
+                    <p>The window, mouse and images filled out. <code>_SAVEIMAGE</code> writes PNG, JPG, BMP, TGA, GIF, ICO and WEBP files, <code>_HSB32</code> builds colors from hue, saturation and brightness, and <code>_SETALPHA</code>, <code>_CLEARCOLOR</code> and the palette functions round out the images. The window gained <code>_TITLE$</code>, <code>_SCREENMOVE</code>, <code>_SCREENHIDE</code> and the <code>_DESKTOP</code> functions, the mouse gained <code>_MOUSESHOW</code> with cursor styles and <code>_MOUSEMOVE</code>, and the metacommands <code>$INCLUDE</code>, <code>$INCLUDEONCE</code>, <code>$IF</code>/<code>$ELSE</code>, <code>$LET</code>, <code>$SCREENHIDE</code> and <code>$SCREENSHOW</code> are processed — before, every <code>$IF</code> branch ran.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-18</p>
+                    <p>The QB64 system functions arrived: <code>_OS$</code>, <code>_UPTIME</code>, <code>_COMMANDCOUNT</code>, <code>_ERRORLINE</code>, <code>_ERRORMESSAGE$</code>, the lock keys, <code>_KEYCLEAR</code> and <code>_CLIPBOARD$</code>, which reads and sets the clipboard — before, each read as a plain variable. The VS Code extension now highlights <code>.bas</code> files too, with a grammar generated straight from the lexer's keyword tables.</p>
+                </article>
+                <article class="note">
                     <p class="note-date">2026-10-16</p>
                     <p>Basika now has a demo video, and it's built by basika itself. Each demo runs headless and saves every frame with <code>SCREENSHOT</code>, small scripts drive the mouse through Paint and Jukebox, and Vortex and Burrow play themselves on autopilot. A Python script draws the title cards in the IBM VGA font and synthesizes the soundtrack, and ffmpeg joins the clips and adds a CRT glow and scanlines. Also fixed a crash when an expression ends in an operator, such as <code>PRINT 1 +</code>; it now reports a syntax error, as QBasic does.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-10-16</p>
+                    <p>A large batch of QB64 Phoenix Edition functions arrived: the math set — <code>_MIN</code>, <code>_MAX</code>, <code>_CLAMP</code>, <code>_CEIL</code>, <code>_HYPOT</code> and <code>_ATAN2</code>, plus the hyperbolic and reciprocal trig families and the degree, radian and gradian conversions; the bit set — <code>_SHL</code>, <code>_SHR</code>, <code>_ROL</code> and <code>_ROR</code>; and the string set — <code>_TRIM$</code>, <code>_BIN$</code>, <code>_INSTRREV</code>, <code>_STRCMP</code> and <code>_STRICMP</code>. QB64 functions now get their arguments with their types instead of as doubles, so large <code>_INTEGER64</code> values stay exact, and <code>_ROUND</code> returns an integer, as in QB64. The file and folder functions were added too — <code>_FILEEXISTS</code>, <code>_DIREXISTS</code>, <code>_DIR$</code>, <code>_CWD$</code>, <code>_STARTDIR$</code>, <code>_FULLPATH$</code>, <code>_FILES$</code>, <code>_READFILE$</code> and <code>_WRITEFILE</code> — before, each read as a variable, so <code>IF _FILEEXISTS(f$) THEN</code> was always false. The five performance benchmarks became one two-second check whose baseline stays put, and the 3D wave demo now turns its surface around the Y axis instead of drawing it once.</p>
                 </article>
                 <article class="note">
                     <p class="note-date">2026-10-15</p>
