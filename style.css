@@ -196,6 +196,7 @@ main {
 }
 
 .card {
+    position: relative;
     display: flex;
     flex-direction: column;
     background: rgba(255, 255, 255, 0.02);
@@ -249,8 +250,27 @@ main {
     font-weight: 700;
 }
 
-.card-link:hover {
+.card-link:hover,
+.card:hover .card-link {
     color: var(--accent-2);
+}
+
+/* Stretch the link over the whole card so the entire card is clickable. */
+.card-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: 14px;
+}
+
+.card-link:focus-visible {
+    outline: none;
+}
+
+.card-link:focus-visible::after {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
 }
 
 /* ---------- Project detail header ---------- */
