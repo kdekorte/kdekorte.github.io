@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FeatherEdit — a lightweight, native macOS text editor by Kevin DeKorte.">
+    <title>FeatherEdit — Kevin DeKorte</title>
+    <link rel="canonical" href="https://kdekorte.github.io/featheredit.html">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9617520842418047" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="stars" aria-hidden="true"></div>
+
+    <header class="detail-hero">
+        <div class="detail-hero-inner">
+            <a class="back-link" href="index.html">← Back to Projects</a>
+            <img class="detail-icon" src="images/featheredit/icon.png" alt="FeatherEdit icon" loading="lazy">
+            <h1>FeatherEdit</h1>
+            <a class="btn btn-ghost" href="https://github.com/kdekorte/FeatherEdit" target="_blank" rel="noopener">View on GitHub ↗</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="description" class="section">
+            <div class="section-head">
+                <span class="section-index">01</span>
+                <h2>Description</h2>
+            </div>
+            <p class="lead">A lightweight, native macOS text editor — a little sibling of VS Code for opening a file, making small edits, and saving it.</p>
+            <p class="lead">FeatherEdit is built in Swift and AppKit with no storyboards, so everything is plain code. It is deliberately not a project editor.</p>
+        </section>
+
+        <section id="screenshots" class="section">
+            <div class="section-head">
+                <span class="section-index">02</span>
+                <h2>Screenshots</h2>
+            </div>
+            <figure class="screenshot">
+                <img src="images/featheredit/screenshot.png" alt="FeatherEdit window with a single Greeting.swift tab, Swift source code in syntax-highlighted colors, and a blue status bar showing saved state, line and column, UTF-8, and Swift" loading="lazy" width="2000" height="1416">
+                <figcaption>Editing a Swift file: syntax highlighting, a tab strip, and a status bar showing save state, cursor position, encoding, and language.</figcaption>
+            </figure>
+        </section>
+
+        <section id="features" class="section">
+            <div class="section-head">
+                <span class="section-index">03</span>
+                <h2>Features</h2>
+            </div>
+            <ul class="feature-list">
+                <li><strong>Native macOS app</strong> — a real menu bar with the standard ⌘ shortcuts, native open and save panels, and drag-and-drop.</li>
+                <li><strong>Syntax highlighting</strong> — keyword, comment, string, and number coloring for Rust, Swift, Python, JavaScript, C/C++, Go, Shell, and JSON, chosen by file extension.</li>
+                <li><strong>Find and Replace</strong> — a VS Code-style find bar with live match count, case-sensitive, whole-word, and regex toggles, and undoable Replace All.</li>
+                <li><strong>Split editor</strong> — two independent views of the same buffer, side by side or stacked.</li>
+                <li><strong>Tabs and sidebar</strong> — a tab strip with dirty indicators, plus an Open Files sidebar. Drag tabs between windows to tear off, dock, or reorder them.</li>
+                <li><strong>Format JSON</strong> — right-click in a JSON file to re-indent it while keeping key order and number spelling.</li>
+                <li><strong>Editor dark mode</strong> — a dark theme for the editing area only, while the rest of the app keeps the native appearance.</li>
+                <li><strong>Settings and status bar</strong> — toggles for highlighting, line numbers, wrapping, and dark mode that persist across launches, and a status bar showing line, column, encoding, and language.</li>
+                <li><strong>Open Recent</strong> — quick access to the last five files you opened.</li>
+                <li><strong>Works with Finder</strong> — registers as an editor for around 50 text and source-code file types, so it appears in "Open With".</li>
+            </ul>
+        </section>
+
+        <section id="install" class="section">
+            <div class="section-head">
+                <span class="section-index">04</span>
+                <h2>Getting Started</h2>
+            </div>
+            <p>FeatherEdit requires macOS 13 or later. Install the latest release with <a href="https://brew.sh" target="_blank" rel="noopener">Homebrew</a>:</p>
+<pre><code>brew tap kdekorte/featheredit https://github.com/kdekorte/FeatherEdit
+brew trust kdekorte/featheredit
+brew install --cask kdekorte/featheredit/featheredit</code></pre>
+            <p>You can also download <code>FeatherEdit-&lt;version&gt;.zip</code> from the <a href="https://github.com/kdekorte/FeatherEdit/releases" target="_blank" rel="noopener">releases page</a> and drag <code>FeatherEdit.app</code> to <code>/Applications</code>.</p>
+            <p>Once it's installed, open a file from the command line:</p>
+<pre><code>open -a FeatherEdit file.txt</code></pre>
+            <p>Files are read and written as UTF-8, and the highlighter re-colors the whole file on every edit, so FeatherEdit is best suited to small files.</p>
+        </section>
+
+        <section id="notes" class="section">
+            <div class="section-head">
+                <span class="section-index">05</span>
+                <h2>Development Notes</h2>
+            </div>
+            <div class="notes">
+                <article class="note">
+                    <p class="note-date">2026-11-17</p>
+                    <p>Version 1.1.0 added tab drag-and-drop between windows with a live tear-off window, and a Format JSON context-menu item that preserves key order. Text changed programmatically is now re-highlighted correctly.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-11-14</p>
+                    <p>Added VS Code-style Find and Replace, a split editor, and a File ▸ Open Recent menu. The status bar now follows the macOS accent color, and a setting controls whether the sidebar shows on launch.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-11-13</p>
+                    <p>Released 1.0.0 with the MIT license, a technical spec, and a Homebrew cask. Version 1.0.1 fixed files opened through Finder's Open With not loading.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <nav class="footer-nav" aria-label="Site">
+            <a href="index.html">Home</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="https://github.com/kdekorte" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/kevin-dekorte-9445943" target="_blank" rel="noopener">LinkedIn</a>
+        </nav>
+        <p>&copy; 2026 Kevin DeKorte</p>
+        <p class="footer-sub">Built with a love for clean code.</p>
+    </footer>
+</body>
+</html>
+

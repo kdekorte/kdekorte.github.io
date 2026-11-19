@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cinch — a native macOS archive editor by Kevin DeKorte.">
+    <title>Cinch — Kevin DeKorte</title>
+    <link rel="canonical" href="https://kdekorte.github.io/cinch.html">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9617520842418047" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="stars" aria-hidden="true"></div>
+
+    <header class="detail-hero">
+        <div class="detail-hero-inner">
+            <a class="back-link" href="index.html">← Back to Projects</a>
+            <img class="detail-icon" src="images/cinch/icon.png" alt="Cinch icon" loading="lazy">
+            <h1>Cinch</h1>
+            <a class="btn btn-ghost" href="https://github.com/kdekorte/Cinch" target="_blank" rel="noopener">View on GitHub ↗</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="description" class="section">
+            <div class="section-head">
+                <span class="section-index">01</span>
+                <h2>Description</h2>
+            </div>
+            <p class="lead">A native macOS archive editor for <code>.zip</code>, <code>.tar</code> and <code>.tar.gz</code> files — browse, edit, and extract archives without ever dropping to the command line.</p>
+            <p class="lead">Cinch is written in Swift with SwiftUI and AppKit, and shows archive contents in a familiar Finder-style multi-column outline view. It also bundles <code>cinch-mcp</code>, an MCP server that lets AI assistants work with archives using the same engines as the app.</p>
+        </section>
+
+        <section id="screenshots" class="section">
+            <div class="section-head">
+                <span class="section-index">02</span>
+                <h2>Screenshots</h2>
+            </div>
+            <figure class="screenshot">
+                <img src="images/cinch/screenshot.png" alt="Cinch window showing the contents of Project-Files.zip in a Finder-style list with Name, Kind, Size, and Date Modified columns, a toolbar of archive actions, and a status bar" loading="lazy" width="1800" height="900">
+                <figcaption>A zip archive open in Cinch: folders and files in a Finder-style list, with a toolbar for adding, extracting, and deleting entries.</figcaption>
+            </figure>
+        </section>
+
+        <section id="features" class="section">
+            <div class="section-head">
+                <span class="section-index">03</span>
+                <h2>Features</h2>
+            </div>
+            <ul class="feature-list">
+                <li><strong>Browse archives</strong> — a Finder-like outline view with sortable, resizable, and reorderable Name, Kind, Size, and Date Modified columns.</li>
+                <li><strong>Zip, tar, and tar.gz</strong> — open and edit zip archives, and browse tar and gzip-compressed tar (<code>tar.gz</code> / <code>tgz</code>) files.</li>
+                <li><strong>Edit in place</strong> — add files and folders, rename or delete entries, and create new folders inside the archive.</li>
+                <li><strong>Drag and drop</strong> — drop files or whole folders into the window, move entries between folders, or drag items out to the Finder.</li>
+                <li><strong>Password-protected zips</strong> — open encrypted archives and save them with AES-256 encryption. Passwords are kept in session memory only.</li>
+                <li><strong>Extract and save</strong> — save entries to disk, including recursive folder extraction, with progress feedback.</li>
+                <li><strong>Open anything</strong> — double-click a file to open it in its default application.</li>
+                <li><strong>MCP server for AI agents</strong> — the bundled <code>cinch-mcp</code> exposes ten archive tools to Cline, Claude Code, Claude Desktop, and other MCP clients.</li>
+            </ul>
+        </section>
+
+        <section id="install" class="section">
+            <div class="section-head">
+                <span class="section-index">04</span>
+                <h2>Getting Started</h2>
+            </div>
+            <p>On macOS, install the latest release with <a href="https://brew.sh" target="_blank" rel="noopener">Homebrew</a>:</p>
+<pre><code>brew tap kdekorte/cinch https://github.com/kdekorte/Cinch
+brew install --cask kdekorte/cinch/cinch</code></pre>
+            <p>You can also download <code>Cinch-&lt;version&gt;.zip</code> from the <a href="https://github.com/kdekorte/Cinch/releases" target="_blank" rel="noopener">releases page</a> and drag <code>Cinch.app</code> to <code>/Applications</code>.</p>
+            <p>Cinch is not notarized by Apple, so macOS may report that it is "damaged" on first launch. If you trust the download, remove the quarantine attribute and open it again:</p>
+<pre><code>xattr -dr com.apple.quarantine /Applications/Cinch.app</code></pre>
+            <h3 class="detail-sub">Using the MCP server</h3>
+            <p>Once Cinch is in <code>/Applications</code>, point your MCP client at the bundled binary. For Cline or Claude Desktop:</p>
+<pre><code>{
+  "mcpServers": {
+    "cinch": {
+      "command": "/Applications/Cinch.app/Contents/MacOS/cinch-mcp"
+    }
+  }
+}</code></pre>
+            <p>For Claude Code:</p>
+<pre><code>claude mcp add cinch -- /Applications/Cinch.app/Contents/MacOS/cinch-mcp</code></pre>
+        </section>
+
+        <section id="notes" class="section">
+            <div class="section-head">
+                <span class="section-index">05</span>
+                <h2>Development Notes</h2>
+            </div>
+            <div class="notes">
+                <article class="note">
+                    <p class="note-date">2026-11-19</p>
+                    <p>Re-signed the app after bundling <code>cinch-mcp</code>, rebuilt 1.3, and documented the <code>xattr</code> quarantine workaround in the README.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-11-17</p>
+                    <p>Version 1.3 added <code>cinch-mcp</code>, a stdio MCP server bundled inside the app. It offers ten tools for listing, reading, extracting, creating, and editing archives, including AES-256 passwords. The release process now publishes curated release notes.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-11-13</p>
+                    <p>Versions 1.1 and 1.2 added password-protected zip support through libzip, with AES-256 encryption on save. Drag-out now extracts real file contents instead of empty placeholders, and double-clicking a file opens it in its default application.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-11-12</p>
+                    <p>Added drag-and-drop moves between folders, a Homebrew cask, and a release script that builds the zip, pkg, and source archive. Registered Cinch as a handler for zip archives and gave it an app icon.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-11-11</p>
+                    <p>Modernized the UI with a native toolbar, an archive header, a status bar, and a redesigned empty state. Added the README, a command-line build script, and the MIT license.</p>
+                </article>
+                <article class="note">
+                    <p class="note-date">2026-07-16</p>
+                    <p>A basic working demo, following the initial commit on 2026-07-13.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <nav class="footer-nav" aria-label="Site">
+            <a href="index.html">Home</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="https://github.com/kdekorte" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/kevin-dekorte-9445943" target="_blank" rel="noopener">LinkedIn</a>
+        </nav>
+        <p>&copy; 2026 Kevin DeKorte</p>
+        <p class="footer-sub">Built with a love for clean code.</p>
+    </footer>
+</body>
+</html>
+
